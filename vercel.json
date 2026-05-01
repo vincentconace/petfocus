@@ -7,7 +7,7 @@
   "experimentalServices": {
     "web": {
       "type": "web",
-      "mount": "/"
+      "routePrefix": "/"
     }
   }
 }
