@@ -41,7 +41,7 @@ export default function Services() {
         <div className="mt-10 flex justify-center">
           <Link
             href={sectionHref(lang, "services")}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-bg-surface border border-line text-ink-primary hover:border-ink-primary/30 hover:bg-bg-subtle shadow-pill transition-all font-medium"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-bg-surface border border-line text-ink-primary hover:border-ink-primary/30 hover:bg-bg-subtle shadow-pill transition-colors duration-200 font-medium"
           >
             {t(T.services.seeAll, lang)}
             <ArrowRight size={16} />

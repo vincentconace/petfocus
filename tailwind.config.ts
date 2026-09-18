@@ -8,7 +8,11 @@ import type { Config } from "tailwindcss";
 const c = (name: string) => `rgb(var(--c-${name}) / <alpha-value>)`;
 
 const config: Config = {
-  darkMode: "class",
+  // Keyed to an attribute rather than a class: `<html>`'s className is
+  // React-managed, so anything set on it imperatively is wiped the moment the
+  // root layout re-renders (which the [lang] segment change forces). React
+  // never renders data-theme, so it survives.
+  darkMode: ["selector", '[data-theme="dark"]'],
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",

@@ -74,7 +74,7 @@ export default function EndOfLifeCare() {
                 </LinkButton>
                 <Link
                   href={serviceHref(lang, "end-of-life")}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-support-text hover:gap-2.5 transition-all"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-support-text hover:gap-2.5 transition-[gap,color] duration-200"
                 >
                   {t(c.more, lang)}
                   <ArrowRight size={14} />

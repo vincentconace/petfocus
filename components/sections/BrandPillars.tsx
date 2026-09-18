@@ -47,7 +47,7 @@ export default function BrandPillars() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="group bg-bg-surface hover:bg-bg-subtle/70 rounded-3xl p-8 border border-line transition-all hover:-translate-y-1 hover:shadow-float-lg shadow-card"
+              className="group bg-bg-surface hover:bg-bg-subtle/70 rounded-3xl p-8 border border-line transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-1 hover:shadow-float-lg shadow-card"
             >
               <div
                 className={`w-14 h-14 rounded-full ${p.bg} text-white flex items-center justify-center mb-5 shadow-pill group-hover:scale-110 transition-transform`}

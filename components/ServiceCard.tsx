@@ -54,7 +54,7 @@ export default function ServiceCard({
     >
       <Link
         href={serviceHref(lang, service.id)}
-        className="group h-full flex flex-col overflow-hidden bg-bg-surface rounded-3xl border border-line shadow-card hover:-translate-y-1 hover:shadow-float-lg transition-all"
+        className="group h-full flex flex-col overflow-hidden bg-bg-surface rounded-3xl border border-line shadow-card hover:-translate-y-1 hover:shadow-float-lg transition-[transform,box-shadow,border-color] duration-200"
       >
         <div className="relative aspect-[16/10] overflow-hidden bg-bg-subtle">
           <Image
@@ -77,7 +77,7 @@ export default function ServiceCard({
           <p className="text-ink-secondary text-sm leading-relaxed flex-1">
             {t(service.tagline, lang)}
           </p>
-          <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-brand-primary group-hover:gap-2.5 transition-all">
+          <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-brand-primary group-hover:gap-2.5 transition-[gap,color] duration-200">
             {t(T.common.learnMore, lang)}
             <ArrowRight size={14} />
           </span>

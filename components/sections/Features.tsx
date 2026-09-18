@@ -36,7 +36,7 @@ export default function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="group p-7 lg:p-8 bg-bg-surface rounded-3xl border border-line shadow-card hover:-translate-y-1 hover:shadow-float-lg transition-all"
+              className="group p-7 lg:p-8 bg-bg-surface rounded-3xl border border-line shadow-card hover:-translate-y-1 hover:shadow-float-lg transition-[transform,box-shadow,border-color] duration-200"
             >
               <span className="inline-block text-[0.6rem] uppercase tracking-[0.18em] text-brand-primary font-semibold mb-4 px-3 py-1 rounded-full bg-brand-primary/10">
                 {t(item.tag, lang)}

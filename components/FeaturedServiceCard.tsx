@@ -57,7 +57,7 @@ export default function FeaturedServiceCard({ service }: { service: Service }) {
 
         <Link
           href={serviceHref(lang, service.id)}
-          className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-support-text text-white dark:text-[#0B1017] hover:bg-brand-support-hover shadow-pill transition-all font-semibold"
+          className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-support-text text-white dark:text-[#0B1017] hover:bg-brand-support-hover shadow-pill transition-colors duration-200 font-semibold"
         >
           {t(T.common.learnMore, lang)}
           <ArrowRight size={16} />

@@ -133,7 +133,7 @@ export default function ServiceBody({ service }: { service: Service }) {
             <h2 className="display-3">{t(T.services.related, lang)}</h2>
             <Link
               href={sectionHref(lang, "services")}
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-primary hover:gap-2.5 transition-all shrink-0"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-primary hover:gap-2.5 transition-[gap,color] duration-200 shrink-0"
             >
               {t(T.services.backToAll, lang)}
               <ArrowRight size={14} />

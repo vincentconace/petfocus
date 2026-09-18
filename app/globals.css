@@ -56,7 +56,7 @@
   --shadow-pill: 0 6px 20px rgb(15 20 25 / 0.1), 0 1px 3px rgb(15 20 25 / 0.06);
 }
 
-.dark {
+[data-theme="dark"] {
   color-scheme: dark;
 
   /* The manual defines no dark theme — it only specifies the white logo on
@@ -74,13 +74,18 @@
   --c-support-text: 126 214 131;
   --c-support-hover: 143 222 147;
 
-  --c-bg: 11 16 23;
-  --c-bg-subtle: 18 26 36;
-  --c-surface: 20 29 40;
+  /* Surface separation, measured rather than eyeballed. The first pass put a
+     card at 1.12:1 against the page and its border at 1.26:1 — effectively
+     invisible. Calibrated against real dark UIs (GitHub dark sits at 1.19:1
+     for surface and 1.65:1 for border) rather than at WCAG 1.4.11's 3:1,
+     which is unreachable this close to black without the cards glowing. */
+  --c-bg: 11 16 23;          /* #0B1017 */
+  --c-bg-subtle: 21 31 44;   /* #151F2C — 1.15:1 vs bg */
+  --c-surface: 27 40 57;     /* #1B2839 — 1.28:1 vs bg */
   --c-ink: 242 245 249;
   --c-ink-secondary: 163 177 194;
-  --c-ink-subtle: 111 127 145;
-  --c-line: 34 48 63;
+  --c-ink-subtle: 148 163 181; /* #94A3B5 — was 4.14:1 on surface, now 5.79 */
+  --c-line: 53 79 110;       /* #354F6E — 1.77:1 vs surface, was 1.26 */
 
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.36);
   --shadow-float-lg: 0 20px 50px rgb(0 0 0 / 0.55), 0 4px 12px rgb(0 0 0 / 0.4);
@@ -99,15 +104,38 @@ html {
 body {
   background: rgb(var(--c-bg));
   color: rgb(var(--c-ink));
-  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/*
+ * Only <body> used to transition on a theme switch, so the page faded while
+ * every card, border, icon and label snapped. Rather than putting a permanent
+ * colour transition on everything — which would also lag hover states and
+ * fight Framer Motion — the toggle sets this attribute for the length of the
+ * switch and removes it again.
+ */
+[data-theme-transition],
+[data-theme-transition] *,
+[data-theme-transition] *::before,
+[data-theme-transition] *::after {
+  transition:
+    background-color 260ms ease,
+    border-color 260ms ease,
+    color 260ms ease,
+    fill 260ms ease,
+    stroke 260ms ease,
+    box-shadow 260ms ease !important;
+  transition-delay: 0ms !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  body {
-    transition: none;
+  [data-theme-transition],
+  [data-theme-transition] *,
+  [data-theme-transition] *::before,
+  [data-theme-transition] *::after {
+    transition: none !important;
   }
 }
 

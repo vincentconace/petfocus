@@ -4,7 +4,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "../globals.css";
 import { LanguageProvider } from "@/lib/language-context";
 import { isLang, LANGS } from "@/lib/routes";
-import { THEME_INIT_SCRIPT } from "@/components/ThemeToggle";
+import { ThemeProvider, THEME_INIT_SCRIPT } from "@/components/ThemeProvider";
 import type { Lang } from "@/lib/i18n";
 
 // §07 — Plus Jakarta Sans is the brand's single typeface. Its variable weight
@@ -130,7 +130,8 @@ export default function LangLayout({
         />
       </head>
       <body className="font-sans antialiased bg-bg text-ink-primary">
-        <LanguageProvider lang={lang}>
+        <ThemeProvider>
+          <LanguageProvider lang={lang}>
           <a
             href="#main"
             className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-bg-surface focus:text-ink-primary focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-float-lg"
@@ -138,7 +139,8 @@ export default function LangLayout({
             {lang === "es" ? "Ir al contenido" : "Skip to content"}
           </a>
           {children}
-        </LanguageProvider>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

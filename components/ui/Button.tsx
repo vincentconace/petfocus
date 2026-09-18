@@ -45,7 +45,7 @@ type CommonProps = {
 };
 
 const baseClasses =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] hover:scale-[1.02] cursor-pointer";
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[transform,background-color,box-shadow] duration-200 active:scale-[0.98] hover:scale-[1.02] cursor-pointer";
 
 export function Button({
   variant = "primary",

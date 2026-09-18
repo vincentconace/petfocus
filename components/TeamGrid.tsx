@@ -87,7 +87,7 @@ function MemberCard({
                 <button
                   onClick={() => setExpanded((v) => !v)}
                   aria-expanded={expanded}
-                  className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-semibold text-brand-primary hover:gap-2.5 transition-all cursor-pointer"
+                  className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-semibold text-brand-primary hover:gap-2.5 transition-[gap,color] duration-200 cursor-pointer"
                 >
                   {t(expanded ? T.team.readLess : T.team.readMore, lang)}
                   <ChevronDown
