@@ -1,58 +1,106 @@
-# PetFocus — Mobile Veterinary Service Landing Page
+# PetFocus — Mobile Veterinary Service
 
-Modern, fully-bilingual (EN/ES) Next.js 14 landing page for **PetFocus**, a mobile veterinary service serving Davis, Salt Lake, Tooele, and Utah County.
+Bilingual (EN/ES) Next.js 14 site for **PetFocus**, a mobile veterinary service
+covering Davis, Salt Lake, Tooele and Utah County.
 
 ## Stack
 
-- **Next.js 14** (App Router, TypeScript)
-- **Tailwind CSS** with a custom Catalis-inspired design system
-- **Framer Motion** for cinematic scroll/hover animations
-- **Lucide React** for icons
-- **next/font** with Fraunces (display serif) + Inter (body)
-- All hero illustrations and decorations are hand-built **inline SVG** — zero external image dependencies
+- **Next.js 14** — App Router, TypeScript, fully static (25 prerendered pages)
+- **Tailwind CSS** — all colour tokens resolve to CSS variables, so light/dark
+  is one class on `<html>`
+- **Framer Motion** — scroll and hover motion
+- **Lucide React** — icons
+- **next/font** — Plus Jakarta Sans, the brand's single typeface
 
-## Brand identity
+## Brand
 
-| Token | Value |
+Implemented from the Petfocus Brand Manual v1.0 (2026). Palette, typography,
+logo rules, favicon, dark mode and the four documented departures from the
+manual are all described in **[README-brand.md](./README-brand.md)** — read that
+before changing any colour or the logo.
+
+| | |
 |---|---|
-| Primary (Burgundy) | `#8B2332` |
-| Secondary (Teal) | `#2A8388` |
-| Accent (Gold) | `#C8A04A` |
-| Forest Green | `#2D6E4E` |
-| Cream | `#F8F2E4` |
-| Display font | Fraunces (italic accents) |
-| Body font | Inter |
+| Petfocus Blue | `#043D8E` — dominant: structure, headlines, links |
+| Petfocus Green | `#5EBD63` — supporting: icons, eyebrows |
+| Petfocus Pink | `#E83E8C` — specific actions only (the phone CTA) |
+| Typeface | Plus Jakarta Sans (800 / 600 / 500 / 400) |
 
-## Sections
+## Routes
 
-1. Sticky transparent navbar with EN/ES toggle (persisted in `localStorage`)
-2. Hero with floating cards + cinematic SVG illustration
-3. Brand Pillars — Care · Compassion · Convenience
-4. Our Services — 4 detailed bilingual category cards (all 7 services from the flyer covered)
-5. Features — 4-column experience pillars
-6. Core Features — 3 expanded cards (Comfort, Additional, Mobile)
-7. Pricing — 3 service packages with featured shimmer-border tier
-8. Testimonials — auto-scrolling marquee, pause on hover
-9. Blog — 3 article cards with custom SVG covers
-10. Service Area — bilingual chips + decorative Utah map
-11. Final CTA — dark glassy section with newsletter form
-12. Footer — full sitemap, contact, social
+Language lives in the URL — not `localStorage` — so each language is separately
+indexable. Slugs are translated, and cross-language slugs 404 rather than
+serving duplicate content.
+
+```
+/                                →  redirects by Accept-Language
+/en                                 /es
+/en/about                           /es/nosotros
+/en/services                        /es/servicios
+/en/services/wellness               /es/servicios/bienestar
+/en/services/laboratory             /es/servicios/laboratorio
+/en/services/diagnostics            /es/servicios/diagnostico-por-imagenes
+/en/services/dental                 /es/servicios/odontologia
+/en/services/surgery                /es/servicios/cirugia
+/en/services/medical                /es/servicios/consulta-medica
+/en/services/technician             /es/servicios/servicios-tecnicos
+/en/services/end-of-life            /es/servicios/final-de-la-vida
+```
+
+Service Area and Contact are still sections on the home page; they become their
+own routes next. Adding one is a single entry in `LIVE_SECTIONS`
+(`app/[lang]/[section]/page.tsx`).
+
+## Content model
+
+Content is data, not markup. One template renders every service page.
+
+| File | Holds |
+|---|---|
+| `lib/services.ts` | The eight services — titles, taglines, intros, bullet lists, images, bilingual |
+| `lib/team.ts` | The veterinary team, with open questions recorded in the file header |
+| `lib/i18n.ts` | Everything else that is translatable |
+| `lib/routes.ts` | Localized path segments and the language-swap helper |
+| `data/utah-counties.json` | County boundaries from Utah SGID |
+
+Adding a service is one entry in `lib/services.ts`; the route, the nav entry,
+the footer link, the index card and the JSON-LD all follow.
+
+## Docs
+
+- **[README-brand.md](./README-brand.md)** — brand implementation and its exceptions
+- **[docs/photography.md](./docs/photography.md)** — image assets and prompts
+- **[docs/service-area.md](./docs/service-area.md)** — how the county map is generated
 
 ## Run locally
 
 ```bash
-cd petfocus
 npm install
 npm run dev
 ```
 
-Then open [http://localhost:3000](http://localhost:3000).
+Then open [http://localhost:3000](http://localhost:3000). Run only **one** dev
+server per checkout — two `next dev` processes share the same `.next` directory
+and clobber each other's route manifest, which shows up as existing routes
+returning 404 or 500 at random.
 
 ## Deploy
 
-One-click deploy on Vercel: drop the folder in [vercel.com/new](https://vercel.com/new).
+Vercel, from `main`. Set `NEXT_PUBLIC_SITE_URL` to the production domain so
+canonical and `hreflang` URLs are absolute.
 
-## Bilingual system
+## Not ready to publish
 
-All translatable copy lives in `lib/i18n.ts`. The `LanguageProvider` in `lib/language-context.tsx` exposes a `useLang()` hook with `lang`, `setLang`, and `toggle`. Language preference is auto-detected from `navigator.language` on first load and persisted to `localStorage` under the key `petfocus_lang`.
-# petfocus
+Tracked in `README-brand.md` and `lib/team.ts`, repeated here because they are
+content problems rather than code ones:
+
+- **The five testimonials in `lib/i18n.ts` are fabricated**, with invented names
+  and Utah cities. They need to be replaced with real, consented ones or the
+  section removed before this is advertised to the public.
+- Who holds the Medical Director title is unconfirmed — the client gave two
+  conflicting answers.
+- Dr. Bockenstedt's biography is transcribed from another clinic's live site.
+- The Diagnostic Services page claims an internal medicine specialist performs
+  ultrasound and echocardiography; nobody on the team page backs that claim yet.
+- `hello@petfocus.com` is unverified, and the footer's Privacy and Terms links
+  point nowhere.

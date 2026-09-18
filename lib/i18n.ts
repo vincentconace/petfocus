@@ -8,14 +8,32 @@ export const translations = {
     about: { en: "About", es: "Nosotros" },
     area: { en: "Service Area", es: "Cobertura" },
     contact: { en: "Contact", es: "Contacto" },
-    bookVisit: { en: "Book a Visit", es: "Reservar Visita" },
+    // No online booking: every CTA dials the clinic. When EasyVet goes live
+    // this becomes a link to their portal — the label changes, not the flow.
+    callUs: { en: "Call or Text", es: "Llamar o Escribir" },
+    menu: { en: "Menu", es: "Menú" },
+    openMenu: { en: "Open menu", es: "Abrir menú" },
+    closeMenu: { en: "Close menu", es: "Cerrar menú" },
+    submenu: { en: "submenu", es: "submenú" },
+  },
+
+  theme: {
+    toDark: { en: "Switch to dark mode", es: "Cambiar a modo oscuro" },
+    toLight: { en: "Switch to light mode", es: "Cambiar a modo claro" },
   },
 
   // Hero
   hero: {
+    imageAlt: {
+      en: "A golden retriever and a tabby cat gently touching noses in a sunlit living room",
+      es: "Un golden retriever y un gato atigrado se saludan acercando sus hocicos en una sala iluminada por el sol",
+    },
+    sceneCaption: { en: "Right where they feel at home.", es: "Donde se sienten en casa." },
+    pauseMotion: { en: "Pause motion", es: "Pausar movimiento" },
+    resumeMotion: { en: "Resume motion", es: "Reanudar movimiento" },
     badge: { en: "Mobile Veterinary Service", es: "Servicio Veterinario Móvil" },
     headlinePart1: { en: "Bringing veterinary care", es: "Llevamos el cuidado" },
-    italicWord: { en: "home.", es: "veterinario." },
+    italicWord: { en: "home.", es: "veterinario" },
     headlinePart2: { en: "", es: "a su hogar." },
     sub: {
       en: "Compassionate, convenient, full-service veterinary care delivered right to your doorstep across Davis, Salt Lake, Tooele, and Utah County.",
@@ -69,47 +87,48 @@ export const translations = {
       en: "Everything your pet needs — performed safely and gently in the comfort of your home.",
       es: "Todo lo que su mascota necesita — realizado de forma segura y gentil en la comodidad de su hogar.",
     },
-    preventive: {
-      title: { en: "Preventive Care", es: "Cuidado Preventivo" },
-      items: [
-        { en: "Wellness Exams", es: "Chequeos de bienestar" },
-        { en: "Vaccinations", es: "Vacunas" },
-        { en: "Puppy & Kitten Care", es: "Cuidado para cachorros y gatitos" },
-        { en: "Senior Pet Care", es: "Cuidado para mascotas mayores" },
-      ],
+    seeAll: { en: "See all services", es: "Ver todos los servicios" },
+    includes: { en: "What's included", es: "Qué incluye" },
+    related: { en: "Other services", es: "Otros servicios" },
+    backToAll: { en: "All services", es: "Todos los servicios" },
+    // Opening copy for /services — the client's own, verbatim in English.
+    indexTitle: {
+      en: "Veterinary Care That Comes to You",
+      es: "Cuidado Veterinario que Llega a Usted",
     },
-    diagnostics: {
-      title: { en: "Diagnostics", es: "Diagnósticos" },
-      items: [
-        { en: "Bloodwork", es: "Análisis de sangre" },
-        { en: "Urinalysis", es: "Análisis de orina" },
-        { en: "Fecal Testing", es: "Prueba de heces" },
-        { en: "Cytology", es: "Citología" },
-        { en: "Skin & Ear Evaluations", es: "Evaluaciones de piel y oídos" },
-        { en: "T4 Testing", es: "Prueba de T4" },
-      ],
+    indexIntro: {
+      en: "At PetFocus Mobile Veterinary Service, we bring professional veterinary care closer to home. Our fully equipped mobile veterinary unit allows our veterinary team to provide a wide range of preventive, diagnostic, dental, surgical, and supportive services in a convenient and personalized setting.",
+      es: "En PetFocus Servicio Veterinario Móvil acercamos la atención veterinaria profesional a su hogar. Nuestra unidad móvil totalmente equipada permite a nuestro equipo brindar una amplia gama de servicios preventivos, diagnósticos, dentales, quirúrgicos y de soporte, en un entorno conveniente y personalizado.",
     },
-    dental: {
-      title: { en: "Dental Services", es: "Servicios Dentales" },
-      items: [
-        { en: "Dental Exams", es: "Exámenes dentales" },
-        { en: "Professional Dental Cleaning", es: "Limpieza dental profesional" },
-        { en: "Dental X-rays", es: "Radiografías dentales" },
-        { en: "Tooth Extractions", es: "Extracciones dentales" },
-        { en: "Home Dental Care Guidance", es: "Guía de cuidado dental en casa" },
-      ],
+  },
+
+  /**
+   * About page. The mission statement is the client's own, verbatim in
+   * English; the Spanish is our translation and still needs their review.
+   */
+  about: {
+    title: { en: "About PetFocus", es: "Sobre PetFocus" },
+    tagline: {
+      en: "We bring the clinic to your door",
+      es: "Llevamos la clínica a su puerta",
     },
-    surgery: {
-      title: { en: "Soft Tissue Surgery", es: "Cirugía de Tejidos Blandos" },
-      items: [
-        { en: "Spay & Neuter", es: "Esterilización y castración" },
-        { en: "Mass Removal", es: "Extracción de masas" },
-        { en: "Wound Repair", es: "Reparación de heridas" },
-        { en: "Laceration Repair", es: "Reparación de laceraciones" },
-        { en: "Minor Surgical Procedures", es: "Procedimientos quirúrgicos menores" },
-        { en: "Other Soft Tissue Procedures", es: "Otros procedimientos" },
-      ],
+    missionLabel: { en: "Our mission", es: "Nuestra misión" },
+    mission: {
+      en: "Our mission is to strengthen the human-animal bond through compassionate care, meaningful connection, and open communication. At PetFocus, we deliver personalized, exceptional veterinary care where our pets feel most comfortable — their home — creating a more convenient, comfortable and less stressful experience for every pet and family we serve.",
+      es: "Nuestra misión es fortalecer el vínculo entre las personas y los animales a través de un cuidado compasivo, una conexión genuina y una comunicación abierta. En PetFocus brindamos atención veterinaria personalizada y excepcional donde nuestras mascotas se sienten más cómodas — su hogar — creando una experiencia más conveniente, cómoda y menos estresante para cada mascota y cada familia que atendemos.",
     },
+    teamLabel: { en: "Our team", es: "Nuestro equipo" },
+    teamTitle: { en: "Meet our team", es: "Conozca a nuestro equipo" },
+    teamIntro: {
+      en: "The people who will be at your door. Licensed veterinarians who treat your pet the way they would treat their own.",
+      es: "Las personas que van a estar en su puerta. Veterinarios licenciados que tratan a su mascota como tratarían a la suya.",
+    },
+  },
+
+  team: {
+    readMore: { en: "Read more", es: "Leer más" },
+    readLess: { en: "Read less", es: "Leer menos" },
+    bioPending: { en: "Biography pending", es: "Biografía pendiente" },
   },
 
   // Features
@@ -157,97 +176,74 @@ export const translations = {
     ],
   },
 
-  // Core
-  core: {
-    badge: { en: "More we offer", es: "Más que ofrecemos" },
-    headlinePart1: { en: "Going beyond the", es: "Más allá de lo" },
-    italicWord: { en: "basics.", es: "básico." },
-    cards: [
+  /**
+   * "How the visit works" — the block the client asked for ("cómo se realiza
+   * el procedimiento"). Their copy did not include it, so this is DRAFTED BY US
+   * and still needs their sign-off. It is deliberately generic: the shape of an
+   * at-home visit is nearly identical across services, so one shared block does
+   * the work of eight, and per-service specifics can be layered on later via
+   * `Service.steps`.
+   */
+  visit: {
+    badge: { en: "How it works", es: "Cómo funciona" },
+    headline: {
+      en: "What a home visit looks like",
+      es: "Cómo es una visita a domicilio",
+    },
+    steps: [
       {
-        title: { en: "Comfort & Support", es: "Comodidad y Apoyo" },
-        items: [
-          { en: "Quality of Life Consultations", es: "Consultas de calidad de vida" },
-          { en: "Euthanasia Consultations", es: "Consultas para eutanasia" },
-          { en: "In-Home Veterinary Visits", es: "Visitas a domicilio" },
-          { en: "Follow-Up Care", es: "Cuidado de seguimiento" },
-          { en: "Post-Surgical Rechecks", es: "Revisiones postquirúrgicas" },
-        ],
-      },
-      {
-        title: { en: "Additional Services", es: "Servicios Adicionales" },
-        items: [
-          { en: "Nail Trims", es: "Corte de uñas" },
-          { en: "Anal Gland Expression", es: "Expresión de glándulas anales" },
-          { en: "Ear Cleaning", es: "Limpieza de oídos" },
-          { en: "Basic Grooming Support", es: "Apoyo de aseo básico" },
-          { en: "Medication Administration", es: "Administración de medicamentos" },
-        ],
-      },
-      {
-        title: { en: "Mobile Veterinary Care", es: "Cuidado Veterinario Móvil" },
-        body: {
-          en: "We come to you so your pet can stay comfortable at home. A fully equipped mobile clinic — without the carrier ride.",
-          es: "Vamos a su hogar para que su mascota pueda sentirse cómoda y tranquila. Una clínica móvil totalmente equipada — sin transportadora.",
+        title: { en: "You call or text", es: "Usted llama o escribe" },
+        desc: {
+          en: "We talk through what your pet needs and agree on a day and an arrival window that works for you.",
+          es: "Conversamos sobre lo que su mascota necesita y acordamos un día y una franja de llegada que le funcione.",
         },
-        cta: { en: "Book a Visit", es: "Reservar Visita" },
+      },
+      {
+        title: { en: "We come to you", es: "Vamos a su hogar" },
+        desc: {
+          en: "Our fully equipped mobile unit arrives at your door. We set up wherever your pet is most relaxed — the living room floor is fine.",
+          es: "Nuestra unidad móvil totalmente equipada llega a su puerta. Nos instalamos donde su mascota esté más tranquila — el piso del living está perfecto.",
+        },
+      },
+      {
+        title: { en: "Unhurried care", es: "Atención sin apuro" },
+        desc: {
+          en: "No waiting room, no carrier, no other animals. Your pet stays in familiar surroundings and you stay beside them the whole time.",
+          es: "Sin sala de espera, sin transportadora, sin otros animales. Su mascota permanece en su entorno y usted se queda a su lado todo el tiempo.",
+        },
+      },
+      {
+        title: { en: "Afterwards", es: "Después" },
+        desc: {
+          en: "You get a clear summary of what we found, a plan in writing, and a number you can text with questions.",
+          es: "Recibe un resumen claro de lo que encontramos, un plan por escrito y un número al que puede escribir con sus dudas.",
+        },
       },
     ],
   },
 
-  // Pricing
-  pricing: {
-    eyebrow: { en: "Packages", es: "Paquetes" },
-    headlinePart1: { en: "Simple, transparent", es: "Paquetes" },
-    italicWord: { en: "packages.", es: "transparentes." },
-    sub: {
-      en: "Choose the plan that fits your pet's needs.",
-      es: "Elija el plan que mejor se adapte a su mascota.",
+  // End of life care — deliberately its own section, above the rest.
+  // The client asked for this to be separated from "Comfort & Support":
+  // it is a different emotional register and should not sit next to nail trims.
+  endOfLife: {
+    badge: { en: "End of Life Care", es: "Cuidados al Final de la Vida" },
+    headlinePart1: { en: "When the time comes,", es: "Cuando llega el momento," },
+    italicWord: { en: "we're with you.", es: "estamos con usted." },
+    body: {
+      en: "Quality-of-life consultations and end-of-life support, offered gently and without hurry, in the place your pet feels safest. We walk you through every step and give you the time you need.",
+      es: "Consultas de calidad de vida y acompañamiento al final de la vida, con delicadeza y sin apuro, en el lugar donde su mascota se siente segura. Le acompañamos en cada paso y le damos el tiempo que necesite.",
     },
-    plans: [
+    items: [
+      { en: "Quality-of-life consultations", es: "Consultas de calidad de vida" },
+      // The client's copy hedges deliberately: "when appropriate and
+      // available". Keep the hedge — it is not a flat promise.
       {
-        name: { en: "Single Visit", es: "Visita Única" },
-        price: "$129",
-        period: { en: "/ visit", es: "/ visita" },
-        features: [
-          { en: "In-home wellness exam", es: "Chequeo de bienestar a domicilio" },
-          { en: "Up to 1 pet", es: "Hasta 1 mascota" },
-          { en: "Vaccination quote included", es: "Cotización de vacunas incluida" },
-          { en: "Travel within service area", es: "Viaje dentro del área" },
-          { en: "Follow-up call", es: "Llamada de seguimiento" },
-        ],
-        cta: { en: "Book Now", es: "Reservar" },
-        featured: false,
-      },
-      {
-        name: { en: "Wellness Plan", es: "Plan de Bienestar" },
-        price: "$39",
-        period: { en: "/ month", es: "/ mes" },
-        features: [
-          { en: "2 wellness visits per year", es: "2 visitas de bienestar al año" },
-          { en: "Core vaccinations included", es: "Vacunas esenciales incluidas" },
-          { en: "Annual bloodwork", es: "Análisis de sangre anual" },
-          { en: "Priority scheduling", es: "Agenda prioritaria" },
-          { en: "10% off all services", es: "10% de descuento en servicios" },
-        ],
-        cta: { en: "Get Started", es: "Empezar" },
-        featured: true,
-        tag: { en: "Most Popular", es: "Más Popular" },
-      },
-      {
-        name: { en: "Family Plan", es: "Plan Familiar" },
-        price: "$69",
-        period: { en: "/ month", es: "/ mes" },
-        features: [
-          { en: "Up to 3 pets covered", es: "Hasta 3 mascotas cubiertas" },
-          { en: "All Wellness Plan benefits", es: "Beneficios del Plan Bienestar" },
-          { en: "Free dental check-up", es: "Chequeo dental gratis" },
-          { en: "Free quarterly nail trims", es: "Corte de uñas trimestral gratis" },
-          { en: "15% off all services", es: "15% de descuento en servicios" },
-        ],
-        cta: { en: "Get Started", es: "Empezar" },
-        featured: false,
+        en: "In-home euthanasia, when appropriate and available",
+        es: "Eutanasia a domicilio, cuando es apropiado y está disponible",
       },
     ],
+    cta: { en: "Talk to us", es: "Hablemos" },
+    more: { en: "Read more about this care", es: "Conozca más sobre este cuidado" },
   },
 
   // Testimonials
@@ -304,68 +300,45 @@ export const translations = {
     ],
   },
 
-  // Blog
-  blog: {
-    badge: { en: "Pet Care Tips", es: "Consejos de Cuidado" },
-    headlinePart1: { en: "Discover our latest", es: "Descubra nuestros últimos" },
-    italicWord: { en: "tips.", es: "consejos." },
-    posts: [
-      {
-        tag: { en: "Senior Care", es: "Mascotas Mayores" },
-        title: {
-          en: "5 Signs Your Senior Dog Needs a Wellness Check",
-          es: "5 Señales que Su Perro Senior Necesita un Chequeo",
-        },
-        excerpt: {
-          en: "Subtle changes in appetite, energy, or mobility can signal big issues. Here's what to watch for.",
-          es: "Cambios sutiles en apetito, energía o movilidad pueden señalar problemas mayores.",
-        },
-      },
-      {
-        tag: { en: "Wellness", es: "Bienestar" },
-        title: {
-          en: "Why At-Home Vet Visits Reduce Pet Anxiety",
-          es: "Por Qué las Visitas a Domicilio Reducen la Ansiedad",
-        },
-        excerpt: {
-          en: "Familiar smells, no carriers, no strangers — the science behind stress-free care.",
-          es: "Olores familiares, sin transportadoras — la ciencia detrás del cuidado sin estrés.",
-        },
-      },
-      {
-        tag: { en: "Dental", es: "Dental" },
-        title: {
-          en: "Dental Health 101: A Complete Guide",
-          es: "Salud Dental 101: Guía Completa",
-        },
-        excerpt: {
-          en: "85% of pets have some form of dental disease by age 3. Here's how to keep your pet's smile bright.",
-          es: "El 85% de las mascotas tiene enfermedad dental antes de los 3 años. Así se cuida su sonrisa.",
-        },
-      },
-    ],
-    readMore: { en: "Read more", es: "Leer más" },
-  },
-
   // Service area
   area: {
     badge: { en: "Service Area", es: "Cobertura" },
     headline: { en: "Serving Northern Utah", es: "Servimos el Norte de Utah" },
     sub: {
-      en: "Don't see your county? Call us — we may still come.",
-      es: "¿No ve su condado? Llámenos — quizás aún lleguemos.",
+      en: "At-home veterinary care across Davis, Salt Lake, Tooele, and Utah counties.",
+      es: "Atención veterinaria a domicilio en los condados de Davis, Salt Lake, Tooele y Utah.",
     },
-    counties: ["Davis", "Salt Lake", "Tooele", "Utah County"],
+    mapTitle: { en: "Our four service counties in Utah", es: "Nuestros cuatro condados de cobertura en Utah" },
+    mapDescription: {
+      en: "Davis, Salt Lake, Tooele, and Utah counties are highlighted together. Select a county to open that area in Google Maps.",
+      es: "Los condados de Davis, Salt Lake, Tooele y Utah aparecen resaltados juntos. Seleccione un condado para abrir esa zona en Google Maps.",
+    },
+    fourCounties: { en: "4 counties · Utah", es: "4 condados · Utah" },
+    chooseCounty: { en: "Find your county", es: "Encuentre su condado" },
+    instructions: {
+      en: "Select a shaded area or a county below to explore it in Google Maps.",
+      es: "Toque una zona coloreada o un condado de la lista para verlo en Google Maps.",
+    },
+    openMap: { en: "Open in Google Maps", es: "Abrir en Google Maps" },
+    newTab: { en: "opens in a new tab", es: "se abre en una pestaña nueva" },
+    boundaries: { en: "County boundaries: State of Utah · SGID", es: "Límites de condados: Estado de Utah · SGID" },
+    outside: {
+      en: "Outside these counties? Call or text us to ask about your address.",
+      es: "¿Está fuera de estos condados? Llame o envíenos un mensaje para consultar su dirección.",
+    },
+  },
+
+  contact: {
+    call: { en: "Call us", es: "Llamar" },
+    message: { en: "Send a text", es: "Enviar mensaje" },
   },
 
   // Final CTA
   finalCta: {
-    eyebrow: { en: "Join Us", es: "Únase" },
+    eyebrow: { en: "Get in Touch", es: "Contáctenos" },
     headlinePart1: { en: "Bringing veterinary care home with", es: "Llevando el cuidado al hogar con" },
     italicWord: "PetFocus.",
     family: { en: "We treat your pet like family.", es: "Tratamos a su mascota como familia." },
-    placeholder: { en: "your@email.com", es: "su@email.com" },
-    subscribe: { en: "Subscribe", es: "Suscribirse" },
   },
 
   // Footer
@@ -388,7 +361,6 @@ export const translations = {
 
   common: {
     learnMore: { en: "Learn More", es: "Saber Más" },
-    bookVisit: { en: "Book a Visit", es: "Reservar Visita" },
   },
 };
 

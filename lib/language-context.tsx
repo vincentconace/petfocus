@@ -1,51 +1,35 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, ReactNode } from "react";
 import type { Lang } from "./i18n";
 
 type LangContextType = {
   lang: Lang;
-  setLang: (lang: Lang) => void;
-  toggle: () => void;
 };
 
 const LangContext = createContext<LangContextType | undefined>(undefined);
 
-const STORAGE_KEY = "petfocus_lang";
-
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(STORAGE_KEY) as Lang | null;
-      if (stored === "en" || stored === "es") {
-        setLangState(stored);
-      } else {
-        // Try to auto-detect from browser
-        const browserLang = navigator.language.toLowerCase();
-        if (browserLang.startsWith("es")) setLangState("es");
-      }
-    } catch {}
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    try {
-      window.localStorage.setItem(STORAGE_KEY, lang);
-    } catch {}
-    document.documentElement.lang = lang;
-  }, [lang, mounted]);
-
-  const setLang = (newLang: Lang) => setLangState(newLang);
-  const toggle = () => setLangState((prev) => (prev === "en" ? "es" : "en"));
-
+/**
+ * Language now comes from the URL (`/en/...`, `/es/...`), not localStorage.
+ *
+ * The old version kept the choice in localStorage and flipped the copy on the
+ * client. That was fine for a single landing page, but every service page is
+ * meant to be found in search — and a client-side flag means Google indexes
+ * exactly one version of each. Switching languages is navigation now; see
+ * `swapLang` in lib/routes.ts.
+ *
+ * First-visit detection moved to middleware.ts, which redirects `/` to the
+ * visitor's language.
+ */
+export function LanguageProvider({
+  lang,
+  children,
+}: {
+  lang: Lang;
+  children: ReactNode;
+}) {
   return (
-    <LangContext.Provider value={{ lang, setLang, toggle }}>
-      {children}
-    </LangContext.Provider>
+    <LangContext.Provider value={{ lang }}>{children}</LangContext.Provider>
   );
 }
 

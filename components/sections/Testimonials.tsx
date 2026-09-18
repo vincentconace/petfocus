@@ -19,7 +19,7 @@ export default function Testimonials() {
           <Badge>{t(T.testimonials.badge, lang)}</Badge>
           <h2 className="display-2 mt-5">
             {t(T.testimonials.headlinePart1, lang)}{" "}
-            <span className="italic-accent">{t(T.testimonials.italicWord, lang)}</span>{" "}
+            <span className="brand-accent-text">{t(T.testimonials.italicWord, lang)}</span>{" "}
             {t(T.testimonials.headlinePart2, lang)}
           </h2>
           <p className="mt-4 text-ink-secondary text-lg">
@@ -32,18 +32,18 @@ export default function Testimonials() {
             {looped.map((item, i) => (
               <article
                 key={i}
-                className="w-[340px] sm:w-[400px] shrink-0 bg-white rounded-3xl border border-line p-7 shadow-card"
+                className="w-[340px] sm:w-[400px] shrink-0 bg-bg-surface rounded-3xl border border-line p-7 shadow-card"
               >
               <div className="flex gap-0.5 mb-4">
                 {[0, 1, 2, 3, 4].map((s) => (
-                  <Star key={s} size={14} className="text-brand-accent fill-brand-accent" />
+                  <Star key={s} size={14} className="text-brand-support-text fill-brand-support" />
                 ))}
               </div>
-              <p className="text-ink-secondary leading-relaxed mb-5 italic">
+              <p className="text-ink-secondary leading-relaxed mb-5">
                 "{t(item.quote, lang)}"
               </p>
               <div className="flex items-center gap-3 pt-4 border-t border-line">
-                <div className="w-11 h-11 rounded-full bg-gradient-to-br from-brand-primary via-brand-accent to-brand-secondary flex items-center justify-center text-white font-display text-lg shrink-0">
+                <div className="w-11 h-11 rounded-full bg-gradient-to-br from-brand-primary via-brand-support to-brand-support flex items-center justify-center text-white font-display text-lg shrink-0">
                   {item.name.charAt(0)}
                 </div>
                 <div>

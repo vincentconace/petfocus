@@ -1,25 +1,34 @@
 import { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from "react";
 import clsx from "clsx";
 
-type Variant = "primary" | "secondary" | "ghost" | "dark" | "ink";
+type Variant = "primary" | "secondary" | "ghost" | "support" | "ink";
 type Size = "sm" | "md" | "lg";
 
-// Unified palette aligned with the PetFocus logo:
-//   primary / ink  → burgundy (brand-primary, the logo's dominant color)
-//   secondary      → teal (brand-secondary), for non-CTA accent buttons
-//   ghost          → white pill, for soft secondary actions
-//   dark           → near-black, reserved for sections with dark backgrounds
+/**
+ * Button palette follows §06 of the brand manual:
+ *   "Blue is the brand's dominant color. Green accompanies and organizes;
+ *    pink is reserved to highlight specific actions and should never
+ *    dominate a piece."
+ *
+ *   primary   → pink. The one action the site drives to: calling the clinic.
+ *               Uses `accent-strong` (a darkened pink) because brand pink with
+ *               white text lands at 3.8:1, under WCAG AA.
+ *   secondary → blue. Structural and secondary actions.
+ *   support   → green. Reserved for the end-of-life surfaces, where pink
+ *               would read as promotional.
+ *   ghost     → surface pill with a hairline border.
+ */
 const variants: Record<Variant, string> = {
   primary:
-    "bg-brand-primary text-white hover:bg-brand-primary-hover shadow-burgundy-glow",
+    "bg-brand-accent-strong text-white hover:bg-brand-accent-hover shadow-accent-glow",
   secondary:
-    "bg-brand-secondary text-white hover:bg-brand-secondary-hover shadow-pill",
+    "bg-brand-primary text-white hover:bg-brand-primary-hover shadow-primary-glow",
+  support:
+    "bg-brand-support-text text-white hover:bg-brand-support-hover dark:text-[#0B1017] shadow-pill",
   ghost:
-    "bg-white text-ink-primary border border-line hover:border-ink-primary/30 hover:bg-bg-cream shadow-pill",
-  dark: "bg-bg-dark text-white hover:bg-black shadow-ink-glow",
-  // `ink` is kept as an alias for primary so existing call sites work, but
-  // visually it now matches the brand burgundy (no more out-of-palette black).
-  ink: "bg-brand-primary text-white hover:bg-brand-primary-hover shadow-burgundy-glow",
+    "bg-bg-surface text-ink-primary border border-line hover:border-brand-primary/40 hover:bg-bg-subtle shadow-pill",
+  // `ink` is kept as an alias for the blue button so older call sites work.
+  ink: "bg-brand-primary text-white hover:bg-brand-primary-hover shadow-primary-glow",
 };
 
 const sizes: Record<Size, string> = {
@@ -36,7 +45,7 @@ type CommonProps = {
 };
 
 const baseClasses =
-  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 active:scale-[0.98] hover:scale-[1.02] cursor-pointer";
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] hover:scale-[1.02] cursor-pointer";
 
 export function Button({
   variant = "primary",

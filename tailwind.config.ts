@@ -1,6 +1,14 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Tokens resolve to the CSS variables declared in app/globals.css, so every
+ * colour follows the light/dark theme automatically and no component holds a
+ * hex value. Source of truth: Petfocus Brand Manual v1.0 (2026).
+ */
+const c = (name: string) => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 const config: Config = {
+  darkMode: "class",
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,51 +17,58 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand palette extracted from the PetFocus logo (cross gradient).
-        // Used as the single source of truth across the entire site:
-        //   primary  → burgundy (CTAs, accents, dark backgrounds via `deep`)
-        //   secondary → teal (secondary actions, supporting accents)
-        //   accent    → gold (highlights, ratings, badges)
-        //   accent-2  → forest green (success states, supporting visuals)
-        //   orange    → warm orange (decorative accents, illustrations)
         brand: {
-          primary: "#8B2332",          // PETFOCUS burgundy
-          "primary-hover": "#6E1A26",  // darker burgundy (hover)
-          deep: "#2A0A10",             // very dark burgundy (replaces near-black)
-          secondary: "#2A8388",        // teal
-          "secondary-hover": "#1F6A6E", // darker teal (hover)
-          accent: "#C8A04A",           // gold / cat silhouette
-          "accent-2": "#2D6E4E",       // forest green
-          orange: "#D6602B",           // warm orange
+          // Blue — dominant. Headlines, structure, links, secondary buttons.
+          primary: c("primary"),
+          "primary-hover": c("primary-hover"),
+          // Pink — "reserved to highlight specific actions". Primary CTAs only.
+          accent: c("accent"),
+          "accent-strong": c("accent-strong"),
+          "accent-hover": c("accent-hover"),
+          // Green — "accompanies and organises". Checkmarks, labels, support.
+          support: c("support"),
+          "support-text": c("support-text"),
+          "support-hover": c("support-hover"),
+          // Unaltered brand values, for places that must match the logo exactly.
+          blue: c("blue"),
+          green: c("green"),
+          pink: c("pink"),
         },
         bg: {
-          DEFAULT: "#ffffff",
-          subtle: "#F8F2E4",
-          cream: "#FAF6EE",
-          // `dark` is now an on-brand deep burgundy instead of near-black.
-          // This unifies Footer / FinalCTA / dark buttons with the brand.
-          dark: "#2A0A10",
+          DEFAULT: c("bg"),
+          subtle: c("bg-subtle"),
+          surface: c("surface"),
         },
         ink: {
-          primary: "#131313",
-          secondary: "#4c4c4c",
-          subtle: "#9a9a9a",
+          primary: c("ink"),
+          secondary: c("ink-secondary"),
+          subtle: c("ink-subtle"),
         },
         line: {
-          DEFAULT: "#efeff2",
-          warm: "#E8DFC9",
+          DEFAULT: c("line"),
         },
       },
       fontFamily: {
-        display: ["var(--font-fraunces)", "Georgia", "serif"],
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        // Anton — the PetFocus logo font. Use for brand-voice accents:
-        // eyebrow badges, callouts, big stats, etc.
-        brand: ["var(--font-anton)", "Impact", "sans-serif"],
+        // §07 — Plus Jakarta Sans is the brand's single typeface.
+        // System substitutes per the manual: Segoe UI, then Helvetica.
+        sans: [
+          "var(--font-jakarta)",
+          "Segoe UI",
+          "Helvetica",
+          "system-ui",
+          "sans-serif",
+        ],
+        display: [
+          "var(--font-jakarta)",
+          "Segoe UI",
+          "Helvetica",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       letterSpacing: {
-        tightest: "-0.04em",
-        "display-1": "-0.025em",
+        headline: "-0.02em",
+        label: "0.16em",
       },
       borderRadius: {
         card: "1.5rem",
@@ -63,13 +78,11 @@ const config: Config = {
         pill: "9999px",
       },
       boxShadow: {
-        card: "0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(15,23,42,0.05)",
-        "card-lg": "0 4px 12px rgba(15,23,42,0.06), 0 24px 48px rgba(15,23,42,0.08)",
-        float: "0 8px 28px rgba(15,23,42,0.08), 0 2px 6px rgba(15,23,42,0.04)",
-        "float-lg": "0 20px 50px rgba(15,23,42,0.10), 0 4px 12px rgba(15,23,42,0.05)",
-        pill: "0 6px 20px rgba(15,23,42,0.10), 0 1px 3px rgba(15,23,42,0.06)",
-        "burgundy-glow": "0 10px 30px rgba(139, 35, 50, 0.22)",
-        "ink-glow": "0 10px 30px rgba(19,19,19,0.25)",
+        card: "var(--shadow-card)",
+        "float-lg": "var(--shadow-float-lg)",
+        pill: "var(--shadow-pill)",
+        "accent-glow": "0 10px 30px rgb(var(--c-accent-strong) / 0.3)",
+        "primary-glow": "0 10px 30px rgb(var(--c-primary) / 0.28)",
       },
       keyframes: {
         float: {
@@ -84,18 +97,11 @@ const config: Config = {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
-        shimmer: {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
-        },
       },
       animation: {
         float: "float 4s ease-in-out infinite",
-        "float-delay": "float 4s ease-in-out infinite 1s",
-        "float-delay-2": "float 4s ease-in-out infinite 2s",
         "fade-up": "fade-up 0.6s ease-out both",
         marquee: "marquee 40s linear infinite",
-        shimmer: "shimmer 3s linear infinite",
       },
     },
   },
