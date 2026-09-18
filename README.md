@@ -5,7 +5,7 @@ covering Davis, Salt Lake, Tooele and Utah County.
 
 ## Stack
 
-- **Next.js 14** — App Router, TypeScript, fully static (25 prerendered pages)
+- **Next.js 14** — App Router, TypeScript, fully static (29 prerendered pages)
 - **Tailwind CSS** — all colour tokens resolve to CSS variables, so light/dark
   is one class on `<html>`
 - **Framer Motion** — scroll and hover motion
@@ -45,6 +45,8 @@ serving duplicate content.
 /en/services/medical                /es/servicios/consulta-medica
 /en/services/technician             /es/servicios/servicios-tecnicos
 /en/services/end-of-life            /es/servicios/final-de-la-vida
+/en/privacy                         /es/privacidad
+/en/terms                           /es/terminos
 ```
 
 Service Area and Contact are still sections on the home page; they become their
@@ -60,6 +62,7 @@ Content is data, not markup. One template renders every service page.
 | `lib/services.ts` | The eight services — titles, taglines, intros, bullet lists, images, bilingual |
 | `lib/team.ts` | The veterinary team, with open questions recorded in the file header |
 | `lib/i18n.ts` | Everything else that is translatable |
+| `lib/legal.ts` | The Privacy Policy and Terms of Service, section by section, bilingual |
 | `lib/routes.ts` | Localized path segments and the language-swap helper |
 | `data/utah-counties.json` | County boundaries from Utah SGID |
 
@@ -102,5 +105,12 @@ content problems rather than code ones:
 - Dr. Bockenstedt's biography is transcribed from another clinic's live site.
 - The Diagnostic Services page claims an internal medicine specialist performs
   ultrasound and echocardiography; nobody on the team page backs that claim yet.
-- `hello@petfocus.com` is unverified, and the footer's Privacy and Terms links
-  point nowhere.
+- `hello@petfocus.com` is unverified. The legal pages therefore show only the
+  phone number; set `ORG.email` and `ORG.address` in `lib/legal.ts` and the
+  contact lines appear.
+- **The Privacy Policy and Terms of Service were written by us and have not
+  been reviewed by a lawyer.** They are modelled on what comparable US
+  veterinary practices publish and on Utah Code § 58-28-605, and they describe
+  what this site actually does. A Utah attorney should still read them, and
+  `ORG.legalName` in `lib/legal.ts` needs the real registered entity rather
+  than the brand name. Confirm the cancellation window in `POLICY` too.

@@ -7,19 +7,13 @@ import { useLang } from "@/lib/language-context";
 import { translations as T, t } from "@/lib/i18n";
 import { SERVICES } from "@/lib/services";
 import { homeHref, sectionHref, serviceHref } from "@/lib/routes";
+import { SOCIAL_PROFILES } from "@/lib/social";
 
-/**
- * Social profiles. These used to render as `href="#"` — three links that
- * looked clickable and went nowhere. Add the real URLs here and the icon row
- * appears; until the client sends them, it stays hidden rather than broken.
- *
- * Pending: Facebook and Instagram URLs, and the Google review link for `Star`.
- */
-const SOCIAL_LINKS = [
-  { Icon: Instagram, label: "Instagram", href: "" },
-  { Icon: Facebook, label: "Facebook", href: "" },
-  { Icon: Star, label: "Google Reviews", href: "" },
-].filter((s) => s.href);
+const SOCIAL_ICONS = {
+  instagram: Instagram,
+  facebook: Facebook,
+  google: Star,
+} as const;
 
 export default function Footer() {
   const { lang } = useLang();
@@ -112,11 +106,13 @@ export default function Footer() {
                 <MapPin size={14} className="text-brand-primary" /> Northern Utah
               </li>
             </ul>
-            {SOCIAL_LINKS.length > 0 && (
+            {SOCIAL_PROFILES.length > 0 && (
               <div className="mt-6 flex gap-3">
-                {SOCIAL_LINKS.map(({ Icon, label, href }) => (
+                {SOCIAL_PROFILES.map(({ id, label, href }) => {
+                  const Icon = SOCIAL_ICONS[id];
+                  return (
                   <a
-                    key={label}
+                    key={id}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -125,7 +121,8 @@ export default function Footer() {
                   >
                     <Icon size={15} />
                   </a>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -134,12 +131,18 @@ export default function Footer() {
         <div className="mt-14 pt-8 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-subtle">
           <p>{t(T.footer.rights, lang)}</p>
           <div className="flex items-center gap-5">
-            <a href="#" className="hover:text-brand-primary transition-colors">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-brand-primary transition-colors">
-              Terms
-            </a>
+            <Link
+              href={sectionHref(lang, "privacy")}
+              className="hover:text-brand-primary transition-colors"
+            >
+              {t(T.legal.privacyShort, lang)}
+            </Link>
+            <Link
+              href={sectionHref(lang, "terms")}
+              className="hover:text-brand-primary transition-colors"
+            >
+              {t(T.legal.termsShort, lang)}
+            </Link>
             <span className="">Made with ♥ in Utah</span>
           </div>
         </div>

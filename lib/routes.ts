@@ -20,6 +20,10 @@ export const SECTIONS = {
   about: { en: "about", es: "nosotros" },
   area: { en: "service-area", es: "cobertura" },
   contact: { en: "contact", es: "contacto" },
+  // Unaccented Spanish slug on purpose: /es/terminos survives being copied,
+  // pasted and typed by hand in a way /es/términos does not.
+  privacy: { en: "privacy", es: "privacidad" },
+  terms: { en: "terms", es: "terminos" },
 } as const;
 
 export type SectionKey = keyof typeof SECTIONS;

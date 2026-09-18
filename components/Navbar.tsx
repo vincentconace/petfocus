@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./ui/Logo";
@@ -539,6 +539,9 @@ function NavSilhouette({
   );
 }
 
+/** How long the page spends faded out before the new language is pushed. */
+const LANG_FADE_MS = 150;
+
 function LangToggle({
   lang,
   pathname,
@@ -548,8 +551,39 @@ function LangToggle({
   pathname: string;
   className?: string;
 }) {
-  // Switching language is navigation now, not a client-side flag — each
-  // language has its own URL so both can be indexed.
+  const router = useRouter();
+
+  // Still real links: they carry hrefLang for crawlers, and cmd/middle-click
+  // must keep opening a new tab. Only a plain left click is intercepted, to
+  // fade the page out before navigating instead of swapping it in one frame.
+  const handle =
+    (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (
+        e.defaultPrevented ||
+        e.button !== 0 ||
+        e.metaKey ||
+        e.ctrlKey ||
+        e.shiftKey ||
+        e.altKey
+      ) {
+        return;
+      }
+      e.preventDefault();
+
+      // `scroll: false` keeps your place on the page. Switching language is
+      // the same page in another language, so being thrown back to the top
+      // was half of what made it feel abrupt.
+      const go = () => router.push(href, { scroll: false });
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        go();
+        return;
+      }
+
+      document.documentElement.setAttribute("data-lang-switching", "");
+      window.setTimeout(go, LANG_FADE_MS);
+    };
+
   return (
     <div
       className={`relative inline-flex items-center bg-bg-subtle rounded-full p-0.5 ${className}`}
@@ -560,19 +594,23 @@ function LangToggle({
         className="absolute top-0.5 bottom-0.5 w-[calc(50%-2px)] rounded-full bg-brand-primary"
         style={{ left: lang === "en" ? 2 : "calc(50% + 0px)" }}
       />
-      {(["en", "es"] as Lang[]).map((l) => (
-        <Link
-          key={l}
-          href={swapLang(pathname, l)}
-          hrefLang={l}
-          aria-current={lang === l ? "true" : undefined}
-          className={`relative z-10 px-3 py-1 text-xs font-semibold tracking-wider transition-colors ${
-            lang === l ? "text-white" : "text-ink-secondary"
-          }`}
-        >
-          {l.toUpperCase()}
-        </Link>
-      ))}
+      {(["en", "es"] as Lang[]).map((l) => {
+        const href = swapLang(pathname, l);
+        return (
+          <Link
+            key={l}
+            href={href}
+            hrefLang={l}
+            onClick={lang === l ? undefined : handle(href)}
+            aria-current={lang === l ? "true" : undefined}
+            className={`relative z-10 px-3 py-1 text-xs font-semibold tracking-wider transition-colors ${
+              lang === l ? "text-white" : "text-ink-secondary"
+            }`}
+          >
+            {l.toUpperCase()}
+          </Link>
+        );
+      })}
     </div>
   );
 }

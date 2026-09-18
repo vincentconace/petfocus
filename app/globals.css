@@ -107,6 +107,32 @@ body {
 }
 
 /*
+ * Language switch. It is a real navigation to another route, so without this
+ * the whole page is replaced in one frame — the abrupt "hit" the client
+ * reported. The toggle fades the page down, navigates, and the incoming
+ * LanguageProvider clears the attribute so it fades back up.
+ *
+ * Out is quicker than in: leaving should feel decisive, arriving should settle.
+ */
+body {
+  transition: opacity 260ms ease;
+}
+
+[data-lang-switching] body {
+  opacity: 0;
+  transition-duration: 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
+  [data-lang-switching] body {
+    opacity: 1;
+  }
+}
+
+/*
  * Only <body> used to transition on a theme switch, so the page faded while
  * every card, border, icon and label snapped. Rather than putting a permanent
  * colour transition on everything — which would also lag hover states and

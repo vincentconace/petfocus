@@ -329,6 +329,29 @@ export const translations = {
     },
   },
 
+  /**
+   * Chrome around the Privacy Policy and Terms of Service. The documents
+   * themselves are data in `lib/legal.ts`; these are the labels around them.
+   */
+  legal: {
+    updated: { en: "Last updated", es: "Última actualización" },
+    onThisPage: { en: "On this page", es: "En esta página" },
+    summary: { en: "The short version", es: "En resumen" },
+    summaryNote: {
+      en: "A plain-language summary, for orientation. The sections below are the terms that actually apply.",
+      es: "Un resumen en lenguaje claro, para orientarse. Las secciones siguientes son los términos que realmente aplican.",
+    },
+    contactLead: {
+      en: "Call or text us about anything on this page.",
+      es: "Llámenos o escríbanos por cualquier punto de esta página.",
+    },
+    alsoRead: { en: "Also read", es: "Lea también" },
+    privacy: { en: "Privacy Policy", es: "Política de Privacidad" },
+    terms: { en: "Terms of Service", es: "Términos del Servicio" },
+    privacyShort: { en: "Privacy", es: "Privacidad" },
+    termsShort: { en: "Terms", es: "Términos" },
+  },
+
   common: {
     learnMore: { en: "Learn More", es: "Saber Más" },
   },

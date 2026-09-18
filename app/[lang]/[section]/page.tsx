@@ -8,6 +8,8 @@ import FeaturedServiceCard from "@/components/FeaturedServiceCard";
 import TeamGrid from "@/components/TeamGrid";
 import Badge from "@/components/ui/Badge";
 import FinalCTA from "@/components/sections/FinalCTA";
+import LegalBody from "@/components/LegalBody";
+import { LEGAL_DOCS } from "@/lib/legal";
 import { translations as T, t, type Lang } from "@/lib/i18n";
 import { GRID_SERVICES, SET_APART_SERVICES } from "@/lib/services";
 import {
@@ -21,7 +23,15 @@ import {
 export const dynamicParams = false;
 
 /** Service Area and Contact are still home-page anchors; they land here next. */
-const LIVE_SECTIONS: SectionKey[] = ["services", "about"];
+const LIVE_SECTIONS: SectionKey[] = ["services", "about", "privacy", "terms"];
+
+/** Rendered by `LegalBody` from `lib/legal.ts`, not by a bespoke component. */
+const LEGAL_SECTIONS = ["privacy", "terms"] as const;
+type LegalKey = (typeof LEGAL_SECTIONS)[number];
+
+function isLegalKey(key: SectionKey): key is LegalKey {
+  return (LEGAL_SECTIONS as readonly SectionKey[]).includes(key);
+}
 
 export function generateStaticParams({ params }: { params: { lang: Lang } }) {
   return LIVE_SECTIONS.map((key) => ({ section: SECTIONS[key][params.lang] }));
@@ -36,8 +46,12 @@ export function generateMetadata({
   const key = sectionKeyBySlug(params.section, lang);
   if (!key) return {};
 
-  const copy =
-    key === "about"
+  const copy = isLegalKey(key)
+    ? {
+        title: t(LEGAL_DOCS[key].title, lang),
+        desc: t(LEGAL_DOCS[key].tagline, lang),
+      }
+    : key === "about"
       ? { title: t(T.about.title, lang), desc: t(T.about.mission, lang) }
       : {
           title: t(T.services.indexTitle, lang),
@@ -72,12 +86,16 @@ export default function SectionPage({
     <>
       <Navbar />
       <main id="main">
-        {key === "about" ? (
+        {isLegalKey(key) ? (
+          <LegalPage lang={lang} docKey={key} />
+        ) : key === "about" ? (
           <AboutPage lang={lang} />
         ) : (
           <ServicesIndex lang={lang} />
         )}
-        <FinalCTA />
+        {/* No closing sales pitch at the foot of a terms page — the phone
+            number is already in the document and in the footer. */}
+        {!isLegalKey(key) && <FinalCTA />}
       </main>
       <Footer />
     </>
@@ -149,6 +167,25 @@ function ServicesIndex({ lang }: { lang: Lang }) {
           </div>
         </div>
       </section>
+    </>
+  );
+}
+
+/**
+ * Privacy Policy and Terms of Service. Both are the same template over
+ * different data, the way the eight service pages are.
+ */
+function LegalPage({ lang, docKey }: { lang: Lang; docKey: LegalKey }) {
+  const doc = LEGAL_DOCS[docKey];
+
+  return (
+    <>
+      <PageHeader
+        title={t(doc.title, lang)}
+        tagline={t(doc.tagline, lang)}
+        crumbs={[{ label: t(doc.title, lang) }]}
+      />
+      <LegalBody doc={doc} />
     </>
   );
 }
