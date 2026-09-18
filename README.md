@@ -74,6 +74,7 @@ the footer link, the index card and the JSON-LD all follow.
 - **[README-brand.md](./README-brand.md)** — brand implementation and its exceptions
 - **[docs/photography.md](./docs/photography.md)** — image assets and prompts
 - **[docs/service-area.md](./docs/service-area.md)** — how the county map is generated
+- **[docs/legal-checklist.md](./docs/legal-checklist.md)** — what the Privacy Policy and Terms still need, and from whom
 
 ## Run locally
 
@@ -105,12 +106,19 @@ content problems rather than code ones:
 - Dr. Bockenstedt's biography is transcribed from another clinic's live site.
 - The Diagnostic Services page claims an internal medicine specialist performs
   ultrasound and echocardiography; nobody on the team page backs that claim yet.
-- `hello@petfocus.com` is unverified. The legal pages therefore show only the
-  phone number; set `ORG.email` and `ORG.address` in `lib/legal.ts` and the
-  contact lines appear.
-- **The Privacy Policy and Terms of Service were written by us and have not
-  been reviewed by a lawyer.** They are modelled on what comparable US
-  veterinary practices publish and on Utah Code § 58-28-605, and they describe
-  what this site actually does. A Utah attorney should still read them, and
-  `ORG.legalName` in `lib/legal.ts` needs the real registered entity rather
-  than the brand name. Confirm the cancellation window in `POLICY` too.
+- **The Privacy Policy and Terms of Service are published deliberately
+  incomplete.** They were written by us, not by a lawyer, and they are live
+  because a real page is easier for a client and an attorney to review than a
+  draft in a repository — the site is not advertised yet, so there is nothing
+  to be wrong in front of. What is still missing, who has to answer it, and
+  which constant it lands in is tracked in
+  **[docs/legal-checklist.md](./docs/legal-checklist.md)**. The short version:
+  `ORG.legalName` is the brand rather than the registered entity,
+  `ORG.email` and `ORG.address` are blank (so those lines do not render at
+  all), and the numbers in `POLICY` are our defaults, not the client's
+  decisions.
+- The Privacy Policy states as fact that this site runs no analytics, has no
+  forms and stores nothing but a theme preference. That is true today. Adding
+  Vercel Analytics, a contact form, the EasyVet portal, a chat widget or an
+  embedded player makes it false — change section 3 and move `LEGAL_UPDATED`
+  in the same commit.
