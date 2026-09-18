@@ -9,6 +9,11 @@ import { translations as T, t } from "@/lib/i18n";
 export default function Testimonials() {
   const { lang } = useLang();
   const items = T.testimonials.items;
+
+  // Nothing to show until real testimonials arrive — render nothing rather
+  // than an empty marquee or placeholder quotes.
+  if (items.length === 0) return null;
+
   // Duplicate for infinite marquee
   const looped = [...items, ...items];
 

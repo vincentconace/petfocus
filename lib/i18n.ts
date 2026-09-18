@@ -256,48 +256,18 @@ export const translations = {
       en: "Real stories from pet parents across Northern Utah.",
       es: "Historias reales de familias en el norte de Utah.",
     },
-    items: [
-      {
-        quote: {
-          en: "PetFocus made our senior lab's last months so peaceful. They came home to us with so much compassion.",
-          es: "PetFocus hizo los últimos meses de nuestra labrador senior tan tranquilos. Vinieron a casa con mucha compasión.",
-        },
-        name: "Sarah M.",
-        role: { en: "Layton, UT", es: "Layton, UT" },
-      },
-      {
-        quote: {
-          en: "Servicio en español impecable. Mi gato odia el carro y ahora recibe sus chequeos sin estrés. ¡Gracias PetFocus!",
-          es: "Servicio en español impecable. Mi gato odia el carro y ahora recibe sus chequeos sin estrés. ¡Gracias PetFocus!",
-        },
-        name: "Carlos R.",
-        role: { en: "Salt Lake City, UT", es: "Salt Lake City, UT" },
-      },
-      {
-        quote: {
-          en: "From puppy shots to spay surgery, the team has been amazing. My dog actually wags her tail when they arrive.",
-          es: "Desde las primeras vacunas hasta la esterilización, el equipo ha sido increíble. Mi perra mueve la cola cuando llegan.",
-        },
-        name: "Jennifer T.",
-        role: { en: "Bountiful, UT", es: "Bountiful, UT" },
-      },
-      {
-        quote: {
-          en: "Bilingual, kind, and incredibly skilled. The wellness plan paid for itself in the first three months.",
-          es: "Bilingüe, amable y muy capacitado. El plan de bienestar se pagó solo en los primeros tres meses.",
-        },
-        name: "Miguel A.",
-        role: { en: "West Jordan, UT", es: "West Jordan, UT" },
-      },
-      {
-        quote: {
-          en: "Living far from a clinic used to mean my cats skipped checkups. Not anymore. PetFocus is a game changer.",
-          es: "Vivir lejos de una clínica solía significar que mis gatos no recibían chequeos. Ya no. PetFocus lo cambió todo.",
-        },
-        name: "Emily K.",
-        role: { en: "Tooele, UT", es: "Tooele, UT" },
-      },
-    ],
+    /**
+     * EMPTY ON PURPOSE.
+     *
+     * This array held five fabricated testimonials with invented names and
+     * Utah cities ("Sarah M. — Layton, UT", …). Publishing made-up customer
+     * testimonials for a real clinic is deceptive advertising, so they were
+     * removed rather than shipped.
+     *
+     * The section hides itself while this is empty. Add real, consented
+     * quotes here and it reappears — no other change needed.
+     */
+    items: [] as { quote: { en: string; es: string }; name: string; role: { en: string; es: string } }[],
   },
 
   // Service area
