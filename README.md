@@ -5,7 +5,7 @@ covering Davis, Salt Lake, Tooele and Utah County.
 
 ## Stack
 
-- **Next.js 14** — App Router, TypeScript, fully static (29 prerendered pages)
+- **Next.js 14** — App Router, TypeScript, fully static (34 prerendered routes)
 - **Tailwind CSS** — all colour tokens resolve to CSS variables, so light/dark
   is one class on `<html>`
 - **Framer Motion** — scroll and hover motion
@@ -47,6 +47,8 @@ serving duplicate content.
 /en/services/end-of-life            /es/servicios/final-de-la-vida
 /en/privacy                         /es/privacidad
 /en/terms                           /es/terminos
+
+/robots.txt  /sitemap.xml  /llms.txt  /en/opengraph-image  /es/opengraph-image
 ```
 
 Service Area and Contact are still sections on the home page; they become their
@@ -63,7 +65,9 @@ Content is data, not markup. One template renders every service page.
 | `lib/team.ts` | The veterinary team, with open questions recorded in the file header |
 | `lib/i18n.ts` | Everything else that is translatable |
 | `lib/legal.ts` | The Privacy Policy and Terms of Service, section by section, bilingual |
-| `lib/routes.ts` | Localized path segments and the language-swap helper |
+| `lib/routes.ts` | Localized path segments, `LIVE_SECTIONS`, and the language-swap helper |
+| `lib/site.ts` | The canonical origin, the business facts, and every indexable URL |
+| `lib/schema.ts` | JSON-LD builders — the practice, its services, breadcrumbs |
 | `data/utah-counties.json` | County boundaries from Utah SGID |
 
 Adding a service is one entry in `lib/services.ts`; the route, the nav entry,
@@ -88,10 +92,35 @@ server per checkout — two `next dev` processes share the same `.next` director
 and clobber each other's route manifest, which shows up as existing routes
 returning 404 or 500 at random.
 
+## SEO
+
+The origin is decided once, in `lib/site.ts`, and everything absolute derives
+from it: canonicals, `hreflang`, the sitemap, Open Graph URLs and the `@id`s in
+the JSON-LD graph.
+
+| Surface | Built by | What it is |
+|---|---|---|
+| `/robots.txt` | `app/robots.ts` | Allow-all, plus nineteen assistant crawlers named explicitly — `Google-Extended` and `Applebot-Extended` are opt-out tokens, so silence is not a decision |
+| `/sitemap.xml` | `app/sitemap.ts` | 26 URLs — 13 pages × 2 languages — each declaring its twin via `xhtml:link`. Derived from `LIVE_SECTIONS` and `SERVICES`, so it cannot list a route that 404s |
+| `/llms.txt` | `app/llms.txt/route.ts` | The business in the shape an assistant asks about it, including what is *not* published (no prices, no hours, no address, no reviews) so a model does not invent them |
+| `/en/opengraph-image` | `app/[lang]/opengraph-image.tsx` | The 1200×630 share card, generated from the real logo, one per language |
+| JSON-LD | `lib/schema.ts` | `VeterinaryCare` + `WebSite` on every page, `Service` and `BreadcrumbList` where they apply, linked by `@id` |
+
+Two rules in `lib/schema.ts` and `llms.txt`, both deliberate: nothing is
+asserted that has not been confirmed — no opening hours, no street address
+beyond the region, no `aggregateRating` — and the business is disambiguated by
+name from petfocus.com, an unrelated British pet-care magazine.
+
 ## Deploy
 
-Vercel, from `main`. Set `NEXT_PUBLIC_SITE_URL` to the production domain so
-canonical and `hreflang` URLs are absolute.
+Vercel, from `main`.
+
+`NEXT_PUBLIC_SITE_URL` sets the canonical origin. Leave it unset and the code
+falls back to the live alias; it is read with a truthiness check rather than
+`??` because it was once set to an empty string in production, and `"" ?? x` is
+`""` — which silently handed `metadataBase` to Next's `VERCEL_URL` fallback and
+put the project-scoped deployment host on every canonical tag. When the
+practice buys a real domain, set this and nothing else changes.
 
 ## Not ready to publish
 

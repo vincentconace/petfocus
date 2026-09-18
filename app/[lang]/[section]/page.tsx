@@ -10,10 +10,14 @@ import Badge from "@/components/ui/Badge";
 import FinalCTA from "@/components/sections/FinalCTA";
 import LegalBody from "@/components/LegalBody";
 import { LEGAL_DOCS } from "@/lib/legal";
+import JsonLd from "@/components/JsonLd";
+import { languageAlternates, ogImages } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/schema";
 import { translations as T, t, type Lang } from "@/lib/i18n";
 import { GRID_SERVICES, SET_APART_SERVICES } from "@/lib/services";
 import {
   SECTIONS,
+  LIVE_SECTIONS,
   isLang,
   sectionKeyBySlug,
   sectionHref,
@@ -21,9 +25,6 @@ import {
 } from "@/lib/routes";
 
 export const dynamicParams = false;
-
-/** Service Area and Contact are still home-page anchors; they land here next. */
-const LIVE_SECTIONS: SectionKey[] = ["services", "about", "privacy", "terms"];
 
 /** Rendered by `LegalBody` from `lib/legal.ts`, not by a bespoke component. */
 const LEGAL_SECTIONS = ["privacy", "terms"] as const;
@@ -63,10 +64,25 @@ export function generateMetadata({
     description: copy.desc.slice(0, 155),
     alternates: {
       canonical: sectionHref(lang, key),
-      languages: {
+      languages: languageAlternates({
         en: sectionHref("en", key),
         es: sectionHref("es", key),
-      },
+      }),
+    },
+    openGraph: {
+      title: `${copy.title} — PetFocus`,
+      description: copy.desc.slice(0, 155),
+      type: "website",
+      url: sectionHref(lang, key),
+      siteName: "PetFocus Mobile Veterinary Service",
+      locale: lang === "es" ? "es_US" : "en_US",
+      images: ogImages(lang),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${copy.title} — PetFocus`,
+      description: copy.desc.slice(0, 155),
+      images: ogImages(lang),
     },
   };
 }
@@ -98,8 +114,20 @@ export default function SectionPage({
         {!isLegalKey(key) && <FinalCTA />}
       </main>
       <Footer />
+      <JsonLd
+        schema={breadcrumbSchema(lang, [
+          { name: sectionLabel(key, lang), path: sectionHref(lang, key) },
+        ])}
+      />
     </>
   );
+}
+
+/** The crumb a section shows. Legal pages carry their document's own title. */
+function sectionLabel(key: SectionKey, lang: Lang): string {
+  if (isLegalKey(key)) return t(LEGAL_DOCS[key].title, lang);
+  if (key === "about") return t(T.nav.about, lang);
+  return t(T.nav.services, lang);
 }
 
 function AboutPage({ lang }: { lang: Lang }) {

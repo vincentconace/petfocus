@@ -5,6 +5,9 @@ import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import ServiceBody from "@/components/ServiceBody";
 import FinalCTA from "@/components/sections/FinalCTA";
+import JsonLd from "@/components/JsonLd";
+import { languageAlternates, ogImages } from "@/lib/site";
+import { serviceSchema } from "@/lib/schema";
 import { translations as T, t, type Lang } from "@/lib/i18n";
 import { SERVICES, getServiceBySlug } from "@/lib/services";
 import {
@@ -41,16 +44,25 @@ export function generateMetadata({
     description: t(service.intro, lang).slice(0, 155),
     alternates: {
       canonical: serviceHref(lang, service.id),
-      languages: {
+      languages: languageAlternates({
         en: serviceHref("en", service.id),
         es: serviceHref("es", service.id),
-      },
+      }),
     },
     openGraph: {
       title: `${t(service.title, lang)} — PetFocus`,
       description: t(service.tagline, lang),
       type: "article",
+      url: serviceHref(lang, service.id),
+      siteName: "PetFocus Mobile Veterinary Service",
       locale: lang === "es" ? "es_US" : "en_US",
+      images: ogImages(lang),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${t(service.title, lang)} — PetFocus`,
+      description: t(service.tagline, lang),
+      images: ogImages(lang),
     },
   };
 }
@@ -84,30 +96,7 @@ export default function ServicePage({
         <FinalCTA />
       </main>
       <Footer />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            name: t(service.title, lang),
-            description: t(service.intro, lang),
-            serviceType: t(service.title, lang),
-            provider: {
-              "@type": "VeterinaryCare",
-              name: "PetFocus",
-              telephone: "+1-385-381-9161",
-            },
-            areaServed: [
-              "Davis County, Utah",
-              "Salt Lake County, Utah",
-              "Tooele County, Utah",
-              "Utah County, Utah",
-            ],
-            availableLanguage: ["English", "Spanish"],
-          }),
-        }}
-      />
+      <JsonLd schema={serviceSchema(service, lang)} />
     </>
   );
 }

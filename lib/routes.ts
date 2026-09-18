@@ -82,3 +82,18 @@ export function swapLang(pathname: string, to: Lang): string {
 
   return sectionHref(to, key);
 }
+
+/**
+ * The sections that actually have a page today.
+ *
+ * Lives here rather than in the route file because the sitemap has to agree
+ * with the router: a sitemap that lists a URL the router 404s is worse than no
+ * sitemap at all, and that drift is invisible until a crawler finds it.
+ * Service Area and Contact are still home-page anchors.
+ */
+export const LIVE_SECTIONS: SectionKey[] = [
+  "services",
+  "about",
+  "privacy",
+  "terms",
+];

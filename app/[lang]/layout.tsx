@@ -5,6 +5,9 @@ import "../globals.css";
 import { LanguageProvider } from "@/lib/language-context";
 import { isLang, LANGS } from "@/lib/routes";
 import { ThemeProvider, THEME_INIT_SCRIPT } from "@/components/ThemeProvider";
+import JsonLd from "@/components/JsonLd";
+import { SITE_URL, languageAlternates, ogImages } from "@/lib/site";
+import { siteSchema } from "@/lib/schema";
 import type { Lang } from "@/lib/i18n";
 
 // §07 — Plus Jakarta Sans is the brand's single typeface. Its variable weight
@@ -47,10 +50,10 @@ export function generateMetadata({
   return {
     ...META[lang],
     // Canonical and hreflang URLs must be absolute for Google to honour them.
-    // Set NEXT_PUBLIC_SITE_URL to the production domain once it exists.
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "https://petfocus.com"
-    ),
+    // The origin is decided once, in lib/site.ts — see the note there about
+    // the petfocus.com fallback this replaced, which belonged to a different
+    // company and was being published as this site's canonical.
+    metadataBase: new URL(SITE_URL),
     keywords: [
       "mobile vet Utah",
       "veterinaria móvil Utah",
@@ -63,7 +66,24 @@ export function generateMetadata({
     ],
     alternates: {
       canonical: `/${lang}`,
-      languages: { en: "/en", es: "/es" },
+      // x-default included: the middleware sends a visitor with no Spanish
+      // preference to /en, so that is the honest answer to "what do you serve
+      // someone whose language you do not know". Without it Google picks one.
+      languages: languageAlternates({ en: "/en", es: "/es" }),
+    },
+    // Explicit rather than implied. `max-image-preview: large` is what lets a
+    // result carry a photograph instead of a thumbnail, which for a service
+    // people choose emotionally is most of the click.
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
     // Generated from the official symbol (see scripts note in README-brand.md).
     icons: {
@@ -79,13 +99,17 @@ export function generateMetadata({
       title: META[lang].title as string,
       description: META[lang].description as string,
       type: "website",
+      url: `/${lang}`,
+      siteName: "PetFocus Mobile Veterinary Service",
       locale: lang === "es" ? "es_US" : "en_US",
       alternateLocale: lang === "es" ? "en_US" : "es_US",
+      images: ogImages(lang),
     },
     twitter: {
       card: "summary_large_image",
       title: META[lang].title as string,
       description: META[lang].description as string,
+      images: ogImages(lang),
     },
   };
 }
@@ -108,26 +132,7 @@ export default function LangLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "VeterinaryCare",
-              name: "PetFocus",
-              description: "Mobile Veterinary Service",
-              telephone: "+1-385-381-9161",
-              areaServed: [
-                { "@type": "AdministrativeArea", name: "Davis County, Utah" },
-                { "@type": "AdministrativeArea", name: "Salt Lake County, Utah" },
-                { "@type": "AdministrativeArea", name: "Tooele County, Utah" },
-                { "@type": "AdministrativeArea", name: "Utah County, Utah" },
-              ],
-              availableLanguage: ["English", "Spanish"],
-              priceRange: "$$",
-            }),
-          }}
-        />
+        <JsonLd schema={siteSchema(lang)} />
       </head>
       <body className="font-sans antialiased bg-bg text-ink-primary">
         <ThemeProvider>
